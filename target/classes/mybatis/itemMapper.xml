@@ -4,6 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kbstar.mapper.ItemMapper">
 
+<!--    <select id="search" parameterType="Integer" resultType="item">-->
+<!--        SELECT * FROM item WHERE price BETWEEN ${search_price1} AND ${search_price2}-->
+<!--    </select>-->
+    <select id="search" parameterType="itemSearch" resultType="item">
+        SELECT * FROM item
+        <where>
+            <if test="startdate != null and !startdate.equals('') ">
+                rdate &gt;= TO_DATE(#{startdate},'YYYY-MM-DD')
+            </if>
+            <if test="enddate != null and !enddate.equals('')">
+                AND   rdate &lt;= TO_DATE(#{enddate},'YYYY-MM-DD')+0.9999
+            </if>
+            <if test="name != null and !name.equals('') ">
+                AND name LIKE '%'||#{name}||'%'
+            </if>
+            <if test="price != null and !price.equals('') ">
+                AND price &gt; #{price}
+            </if>
+        </where>
+    </select>
     <select id="select" parameterType="Integer" resultType="item">
         SELECT *
         FROM item
@@ -13,6 +33,7 @@
     <select id="selectall" resultType="item">
         SELECT *
         FROM item
+        ORDER BY id
     </select>
     <insert id="insert" parameterType="item">
         INSERT INTO item

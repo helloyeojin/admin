@@ -114,4 +114,10 @@ public class MainController {
         model.addAttribute("center", "livechart");
         return "index";
     }
+
+    @RequestMapping("/websocket")
+    public String websocket(Model model) {
+        model.addAttribute("center", "websocket");
+        return "index";
+    }
 }

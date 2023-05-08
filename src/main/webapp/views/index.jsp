@@ -26,6 +26,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+    <!-- kakao map -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c50421cfba86c57e46eb8a1be7a87b80"></script>
+
+    <!-- web socket -->
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 
 </head>
 
@@ -96,6 +102,23 @@
             </div>
         </li>
 
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#marker_mgt"
+               aria-expanded="true" aria-controls="marker_mgt">
+                <i class="fas fa-fw fa-map-pin"></i>
+                <span>Marker</span>
+            </a>
+            <div id="marker_mgt" class="collapse" aria-labelledby="headingUtilities"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Marker Management:</h6>
+                    <a class="collapse-item" href="/marker/add">Add</a>
+                    <a class="collapse-item" href="/marker/all">All Markers</a>
+                </div>
+            </div>
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider">
 
@@ -146,6 +169,13 @@
                 <span>Live Chart</span></a>
         </li>
 
+        <c:if test="${loginadm != null}">
+            <li class="nav-item">
+                <a class="nav-link" href="/websocket">
+                    <i class="fas fa-fw fa-wifi"></i>
+                    <span>websocket</span></a>
+            </li>
+        </c:if>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 

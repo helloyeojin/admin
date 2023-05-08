@@ -1,6 +1,7 @@
 package com.kbstar.service;
 
 import com.kbstar.dto.Marker;
+import com.kbstar.dto.MarkerSearch;
 import com.kbstar.frame.KBService;
 import com.kbstar.mapper.MarkerMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,10 @@ public class MarkerService implements KBService<Integer, Marker> {
 
     public List<Marker> getLoc(String loc) throws Exception{
         return mapper.getloc(loc);
+    }
+
+    public List<Marker> search(MarkerSearch ms) throws Exception{
+        return mapper.search(ms);
     }
 }
 
