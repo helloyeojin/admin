@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kbstar.mapper.ChartMapper">
+
+    <select id="getMonthlyTotal" resultType="chart">
+--         꺽쇠를(특수문자를) 인식하게 하기 위해서 쓰는거고 동적 if문 쓸때는 이거 못 씁니다
+        <![CDATA[
+        SELECT TO_NUMBER(TO_CHAR(rdate, 'MM')) AS month, gender, SUM(price) AS total FROM sales
+--         WHERE TO_NUMBER(TO_CHAR(rdate, 'MM')) > 5
+        GROUP BY TO_CHAR(rdate, 'MM'), gender
+        ORDER BY 1
+        ]]>
+    </select>
+</mapper>

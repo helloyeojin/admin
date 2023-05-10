@@ -6,6 +6,7 @@ import com.kbstar.service.AdmService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +23,13 @@ public class MainController {
     Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
     @Autowired
     AdmService admService;
+    @Value("${adminserver}")
+    String adminserver;
+
+
     @RequestMapping("/")
-    public String main() {
+    public String main(Model model) {
+        model.addAttribute("adminserver", adminserver);
         return "index";
     }
     @RequestMapping("/login")
@@ -111,12 +117,14 @@ public class MainController {
 
     @RequestMapping("/livechart")
     public String livechart(Model model) {
+        model.addAttribute("adminserver", adminserver);
         model.addAttribute("center", "livechart");
         return "index";
     }
 
     @RequestMapping("/websocket")
     public String websocket(Model model) {
+        model.addAttribute("adminserver", adminserver);
         model.addAttribute("center", "websocket");
         return "index";
     }

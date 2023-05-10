@@ -15,7 +15,7 @@ class SelectTest {
     @Test
     void contextLoads() {
         try{
-            service.get();
+            service.gendersales();
         } catch (Exception e){
             log.info("에러..........");
             e.printStackTrace();

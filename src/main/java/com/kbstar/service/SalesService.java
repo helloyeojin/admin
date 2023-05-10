@@ -43,4 +43,8 @@ public class SalesService implements KBService<String, Sales> {
     public List<Sales> get() throws Exception {
         return mapper.selectall();
     }
+
+    public List<Sales> gendersales() throws Exception {
+        return mapper.gendersales();
+    }
 }

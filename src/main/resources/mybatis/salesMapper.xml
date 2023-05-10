@@ -4,6 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kbstar.mapper.SalesMapper">
 
+    <select id="gendersales" resultType="Sales">
+        SELECT TO_CHAR(TO_DATE(rdate, 'YYYY-MM-DD'), 'MM') as rdate, gender, SUM(price) as price
+        FROM sales
+        GROUP BY TO_CHAR(TO_DATE(rdate, 'YYYY-MM-DD'), 'MM'), gender
+        ORDER BY rdate, gender
+    </select>
+
 <!--    <select id="select" parameterType="String" resultType="sales">-->
 <!--        SELECT * FROM sales WHERE ID=#{id}-->
 <!--    </select>-->
@@ -19,5 +26,6 @@
 <!--    <delete id="delete" parameterType="String">-->
 <!--        DELETE FROM sales WHERE id=#{}-->
 <!--    </delete>-->
+
 
 </mapper>

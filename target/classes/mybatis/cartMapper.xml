@@ -4,73 +4,51 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kbstar.mapper.CartMapper">
 
+    <!-- id는 CartMapper에 있는 함수의 명칭 -->
     <select id="select" parameterType="Integer" resultType="cart">
-        SELECT C.ID
-             , C.CUST_ID
-             , C.ITEM_ID
-             , C.CNT
-             , C.RDATE
-             , CU.NAME   AS CUST_NAME
-             , I.NAME    AS ITEM_NAME
-             , I.PRICE   AS ITEM_PRICE
-             , I.IMGNAME AS ITEM_IMGNAME
-        FROM CART C,
-             CUST CU,
-             ITEM I
-        WHERE C.CUST_ID = CU.ID
-          AND C.ITEM_ID = I.ID
-          AND C.ID = #{id}
+        SELECT c.id, c.cust_id, c.item_id, c.cnt, c.rdate
+             , cu.name AS cust_name, it.name AS item_name
+             , it.price AS item_price, it.imgname AS item_imgname
+        FROM cart c, cust cu, item it
+        WHERE c.cust_id = cu.id
+          AND c.item_id = it.id
+          AND c.id = #{id}
     </select>
 
     <select id="getmycart" parameterType="String" resultType="cart">
-        SELECT C.ID
-             , C.CUST_ID
-             , C.ITEM_ID
-             , C.CNT
-             , C.RDATE
-             , CU.NAME   AS CUST_NAME
-             , I.NAME    AS ITEM_NAME
-             , I.PRICE   AS ITEM_PRICE
-             , I.IMGNAME AS ITEM_IMGNAME
-        FROM CART C,
-             CUST CU,
-             ITEM I
-        WHERE C.CUST_ID = CU.ID
-          AND C.ITEM_ID = I.ID
-          AND C.CUST_ID = #{cid}
+        SELECT c.id, c.cust_id, c.item_id, c.cnt, c.rdate
+             , cu.name AS cust_name, it.name AS item_name
+             , it.price AS item_price, it.imgname AS item_imgname
+        FROM cart c, cust cu, item it
+        WHERE c.cust_id = cu.id
+          AND c.item_id = it.id
+          AND c.cust_id = #{cid}
     </select>
 
     <select id="selectall" resultType="cart">
-        SELECT C.ID
-             , C.CUST_ID
-             , C.ITEM_ID
-             , C.CNT
-             , C.RDATE
-             , CU.NAME   AS CUST_NAME
-             , I.NAME    AS ITEM_NAME
-             , I.PRICE   AS ITEM_PRICE
-             , I.IMGNAME AS ITEM_IMGNAME
-        FROM CART C,
-             CUST CU,
-             ITEM I
-        WHERE C.CUST_ID = CU.ID
-          AND C.ITEM_ID = I.ID
+        SELECT c.id, c.cust_id, c.item_id, c.cnt, c.rdate
+             , cu.name AS cust_name, it.name AS item_name
+             , it.price AS item_price, it.imgname AS item_imgname
+        FROM cart c, cust cu, item it
+        WHERE c.cust_id = cu.id
+          AND c.item_id = it.id
     </select>
     <insert id="insert" parameterType="cart">
-        INSERT INTO CART
-        VALUES (cart_seq.NEXTVAL, #{cust_id}, #{item_id}, #{cnt}, SYSDATE)
+        MERGE INTO cart
+            USING dual
+            ON (cust_id = #{cust_id} AND item_id = #{item_id})
+            WHEN NOT MATCHED THEN
+                INSERT (id,cust_id,item_id,cnt,rdate)
+                    VALUES (cart_seq.NEXTVAL, #{cust_id}, #{item_id}, #{cnt}, SYSDATE)
+            WHEN MATCHED THEN
+                UPDATE SET
+                    cnt = cnt+ #{cnt}
     </insert>
     <update id="update" parameterType="cart">
-        UPDATE CART
-        SET CUST_ID=#{cust_id},
-            ITEM_ID=#{item_id},
-            CNT=#{cnt}
-        WHERE ID = #{id}
+        UPDATE cart SET cust_id=#{cust_id}, item_id=#{item_id}, cnt=#{cnt} WHERE id=#{id}
     </update>
     <delete id="delete" parameterType="Integer">
-        DELETE
-        FROM CART
-        WHERE ID = #{id}
+        DELETE FROM cart WHERE id=#{id}
     </delete>
 
 </mapper>

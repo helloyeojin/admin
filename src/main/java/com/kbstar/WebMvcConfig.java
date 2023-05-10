@@ -10,10 +10,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Value("${imgdir}")
     String imgdir;
+    @Value("${logdir}")
+    String logdir;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uimg/**").addResourceLocations(imgdir);
+        registry.addResourceHandler("/logs/**").addResourceLocations(logdir);
     }
 
     //다른 폴더에 저장되어 있는 리소스를 사용할 수 있게 파일경로 설정
